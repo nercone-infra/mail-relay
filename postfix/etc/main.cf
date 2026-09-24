@@ -1,0 +1,45 @@
+compatibility_level = 3.10
+
+myhostname = smtp.nercone.dev
+myorigin   = $myhostname
+
+maillog_file = /dev/stdout
+
+inet_interfaces = loopback-only
+inet_protocols  = ipv4
+
+mydestination        =
+relay_domains        =
+local_recipient_maps =
+local_transport      = error:5.1.1 local delivery is disabled
+alias_maps           =
+alias_database       =
+
+mynetworks = 127.0.0.0/8
+
+smtpd_recipient_restrictions = permit_mynetworks, reject
+smtpd_relay_restrictions     = permit_mynetworks, reject_unauth_destination
+
+message_size_limit = 52428800
+
+tls_config_file        = /etc/postfix/openssl.cnf
+tls_config_name        = postfix
+tls_preempt_cipherlist = yes
+tls_eecdh_auto_curves  = X25519MLKEM768 secp384r1 secp256r1
+
+smtpd_tls_security_level = none
+
+smtp_tls_security_level      = dane
+smtp_dns_support_level       = dnssec
+smtp_tls_protocols           = >=TLSv1.2
+smtp_tls_mandatory_protocols = >=TLSv1.2
+smtp_tls_ciphers             = high
+smtp_tls_mandatory_ciphers   = high
+smtp_tls_exclude_ciphers     = aNULL, eNULL, kRSA, RC4, MD5, DES, 3DES, SEED, IDEA, CAMELLIA, ARIA, CHACHA20
+smtp_tls_loglevel            = 1
+smtp_helo_name               = $myhostname
+
+smtpd_helo_required = yes
+
+biff                = no
+append_dot_mydomain = no
