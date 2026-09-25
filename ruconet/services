@@ -1,0 +1,2 @@
+# TYPE    LISTEN    TARGET           OPTIONS
+server    587       127.0.0.1:587    proxy timeout=30m

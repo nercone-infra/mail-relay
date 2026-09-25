@@ -15,10 +15,13 @@ local_transport      = error:5.1.1 local delivery is disabled
 alias_maps           =
 alias_database       =
 
-mynetworks = 127.0.0.5/32
+mynetworks =
 
-smtpd_recipient_restrictions = permit_mynetworks, reject
-smtpd_relay_restrictions     = permit_mynetworks, reject_unauth_destination
+relay_clients = inline:{ mail.ruconet.internal=OK }
+
+smtpd_client_restrictions    = check_client_access $relay_clients, reject
+smtpd_recipient_restrictions = check_client_access $relay_clients, reject
+smtpd_relay_restrictions     = check_client_access $relay_clients, reject
 
 message_size_limit = 52428800
 
